@@ -196,6 +196,10 @@ resource "aws_rds_cluster_instance" "this" {
   publicly_accessible          = try(each.value.publicly_accessible, var.publicly_accessible)
   tags                         = merge(var.tags, try(each.value.tags, {}))
 
+  lifecycle {
+    ignore_changes = [instance_class]
+  }
+
   timeouts {
     create = try(var.instance_timeouts.create, null)
     update = try(var.instance_timeouts.update, null)
